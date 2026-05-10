@@ -1,0 +1,141 @@
+/*:root {
+  font-family: Inter, system-ui, sans-serif;
+  color: #1f2937;
+  background: #f4f6fb;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { text-decoration: none; color: inherit; }
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.topbar {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 48px;
+  background: #0d1b2a;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.topbar nav {
+  display: flex;
+  gap: 20px;
+  font-weight: 600;
+}
+
+.page-wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 40px 24px 64px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.hero-grid,
+.calculator-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 24px;
+}
+
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.hero-card h2,
+.form-card h2 {
+  margin-top: 0;
+  font-size: 34px;
+}
+
+.actions { margin-top: 24px; }
+
+.primary-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 18px;
+  background: #415a77;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.form-card {
+  display: grid;
+  gap: 16px;
+}
+
+.form-card label {
+  display: grid;
+  gap: 8px;
+  font-weight: 600;
+}
+
+input, select {
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 15px;
+}
+
+.result-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.result-grid div {
+  padding: 16px;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.result-grid span {
+  display: block;
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.result-grid strong {
+  font-size: 28px;
+}
+
+.summary {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.error-text { color: #b91c1c; }
+
+@media (max-width: 900px) {
+  .topbar,
+  .hero-grid,
+  .calculator-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    padding: 20px 24px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+*/
