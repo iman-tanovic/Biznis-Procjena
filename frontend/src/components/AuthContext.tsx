@@ -1,6 +1,13 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+type User = {
+  id: number;
+  email: string;
+  username?: string;
+  is_active?: boolean;
+};
+
 type AuthContextType = {
   currentUser: User | null;
   isAuthenticated: boolean;
