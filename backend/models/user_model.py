@@ -29,5 +29,6 @@ class User(Base):
     password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
     uloga: Mapped[UserUloga] = mapped_column(Enum(UserUloga, name="user_uloga_enum"), nullable=False, default=UserUloga.USER)
     aktivan: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    verifikovan: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)

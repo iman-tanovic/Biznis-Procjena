@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import "../App.css"
+import "../App.css";
 import "./DashboardPage.css";
+import Footer from "../components/Footer";
 
 type ReportItem = {
   id: string;
@@ -113,10 +114,11 @@ export default function DashboardPage() {
   }
 
   return (
+    <div className="page-shell">
     <main className="dashboard-page">
       <aside className="dashboard-sidebar">
         <div className="dashboard-brand">
-          <div className="dashboard-brand__logo">BV</div>
+          <div className="dashboard-brand__logo">BP</div>
           <div>
             <div>
             {loadingUser ? (
@@ -239,17 +241,13 @@ export default function DashboardPage() {
 
               <div className="contact-info">
                 <p>
-                  Ako imaš problem sa procjenama, prijavom ili izvještajima,
+                  Ako imate problem sa procjenama, prijavom ili izvještajima,
                   kontaktiraj podršku.
                 </p>
                 <dl className="user-info-list">
                   <div>
                     <dt>Email</dt>
-                    <dd>support@example.com</dd>
-                  </div>
-                  <div>
-                    <dt>Telefon</dt>
-                    <dd>+387 33 123 456</dd>
+                    <dd>podrska@biznisprocjena.com</dd>
                   </div>
                 </dl>
               </div>
@@ -257,6 +255,9 @@ export default function DashboardPage() {
           </div>
         </section>
       </section>
+      
     </main>
+    <Footer />
+    </div>
   );
 }

@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../App.css";
 import "./CalculatorPage.css";
+import Footer from "../components/Footer";
 
 type CalculationResponse = {
   ime_firme: string;
@@ -222,6 +223,7 @@ export default function CalculatorPage() {
   }
 
   return (
+    <div className="page-shell">
     <main className="calc-page">
       <header className="calc-topbar">
         <div>
@@ -446,6 +448,8 @@ export default function CalculatorPage() {
         </aside>
       </section>
     </main>
+    <Footer />
+    </div>
   );
 }
 

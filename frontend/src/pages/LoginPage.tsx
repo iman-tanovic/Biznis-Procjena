@@ -1,6 +1,9 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import Background from "../components/Background";
+import Footer from "../components/Footer";
+import "../App.css";
+import "./HomePage.css"
 const API_BASE_URL = "";
 
 export default function LoginPage() {
@@ -58,122 +61,58 @@ export default function LoginPage() {
   }
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        background: "#f3f4f6",
-        padding: "24px",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          width: "100%",
-          maxWidth: "420px",
-          background: "white",
-          borderRadius: "20px",
-          padding: "32px",
-          boxShadow: "0 16px 40px rgba(0,0,0,0.08)",
-        }}
-      >
-        <h1 style={{ marginTop: 0 }}>Login</h1>
+    <div className="page-shell">
+  <div className="auth-page">
+    <div className="auth-page__inner">
+      <form onSubmit={handleSubmit} className="auth-card">
+        <h1>Prijava</h1>
+        <p>Prijavite se da pristupite kalkulatoru i dashboardu.</p>
 
-        <p style={{ color: "#6b7280", marginBottom: "24px" }}>
-          Prijavite se da pristupite kalkulatoru.
-        </p>
+        <div className="auth-form-row">
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="unesi email"
+            required
+          />
+        </div>
 
-        <label
-          htmlFor="email"
-          style={{ display: "block", marginBottom: "8px" }}
-        >
-          Email
-        </label>
+        <div className="auth-form-row">
+          <label htmlFor="password">Lozinka</label>
+          <input
+            id="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="unesi lozinku"
+            required
+          />
+        </div>
 
-        <input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="unesi email"
-          required
-          style={{
-            width: "100%",
-            padding: "12px 14px",
-            marginBottom: "16px",
-            borderRadius: "10px",
-            border: "1px solid #d1d5db",
-            boxSizing: "border-box",
-          }}
-        />
+        {error && <div className="alert alert-error">{error}</div>}
 
-        <label
-          htmlFor="password"
-          style={{ display: "block", marginBottom: "8px" }}
-        >
-          Password
-        </label>
-
-        <input
-          id="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="unesi password"
-          required
-          style={{
-            width: "100%",
-            padding: "12px 14px",
-            marginBottom: "16px",
-            borderRadius: "10px",
-            border: "1px solid #d1d5db",
-            boxSizing: "border-box",
-          }}
-        />
-
-        {error && (
-          <div
-            style={{
-              background: "#fee2e2",
-              color: "#991b1b",
-              padding: "12px",
-              borderRadius: "10px",
-              marginBottom: "16px",
-            }}
-          >
-            {error}
-          </div>
-        )}
-
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            width: "100%",
-            background: "#2563eb",
-            color: "white",
-            border: "none",
-            borderRadius: "12px",
-            padding: "14px",
-            fontSize: "16px",
-            cursor: loading ? "not-allowed" : "pointer",
-            opacity: loading ? 0.8 : 1,
-          }}
-        >
-          {loading ? "Prijava..." : "Login"}
+        <button type="submit" disabled={loading} className="btn btn-primary">
+          {loading ? "Prijava..." : "Prijavi se"}
         </button>
 
-        <p style={{ marginTop: "18px", color: "#4b5563" }}>
-          Nemate račun? <Link to="/register">Registrujte se</Link>
-        </p>
-
-        <p style={{ marginTop: "10px" }}>
-          <Link to="/">Nazad na početnu</Link>
-        </p>
+        <div className="auth-links">
+          <p>
+            Nemate račun? <Link to="/register">Registrujte se</Link>
+          </p>
+          <p>
+            <Link to="/">Nazad na početnu</Link>
+          </p>
+        </div>
       </form>
     </div>
-  );
+
+    <Background />
+    
+  </div>
+  <Footer />
+  </div>
+);
 }

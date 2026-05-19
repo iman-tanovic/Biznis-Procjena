@@ -46,11 +46,6 @@ class ValuationService:
 
         zakljucak = f"""Za {payload.ime_firme}, vrijednost firme iznosi {vrijednost_firme:,.2f}.
 Nakon prilagodbe za gotovinu i dug, vrijednost kapitala iznosi {vrijednost_kapitala:,.2f}.
-EV na osnovu:
-PBV: {pbv_mul:,.2f} (multiplikator {ev_pbv:,.2f})
-EBITDA: {ebitda_mul:,.2f} (multiplikator {ev_ebitda:,.2f})
-EBIT: {ebit_mul:,.2f} (multiplikator {ev_ebit:,.2f})
-SALES: {sales_mul:,.2f} (multiplikator {ev_sales:,.2f})
 """
 
         return MultiplesResponse(

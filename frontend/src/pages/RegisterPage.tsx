@@ -1,5 +1,10 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "../App.css";
+import "./RegisterPage.css";
+import VerifyEmailPage from "../components/verify_email";
+import Background from "../components/Background";
+import Footer from "../components/Footer";
 
 const API_BASE_URL = "";
 
@@ -11,7 +16,7 @@ export default function RegisterPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
     setLoading(true);
@@ -22,6 +27,7 @@ export default function RegisterPage() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({
           ime_prezime: imePrezime,
           email,
@@ -29,142 +35,152 @@ export default function RegisterPage() {
         }),
       });
 
-      const data = await response.json();
+      const contentType = response.headers.get("content-type") || "";
+      const data = contentType.includes("application/json")
+        ? await response.json()
+        : await response.text();
 
       if (!response.ok) {
-        setError(data.detail || "Registracija nije uspjela.");
-        setLoading(false);
-        return;
+        const message =
+          typeof data === "string"
+            ? data
+            : data?.detail || "Registracija nije uspjela.";
+        throw new Error(message);
       }
 
-      const token = data.access_token || data.token;
+      navigate("/verify-email");
+      return;
 
-      if (token) {
-        localStorage.setItem("token", token);
-        navigate("/calculator");
-        return;
-      }
-
-      navigate("/login");
-    } catch {
-      setError("Greška pri povezivanju sa serverom.");
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Greška pri povezivanju sa serverom."
+      );
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        background: "#f3f4f6",
-        padding: "24px",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          width: "100%",
-          maxWidth: "420px",
-          background: "white",
-          borderRadius: "20px",
-          padding: "32px",
-          boxShadow: "0 16px 40px rgba(0,0,0,0.08)",
-        }}
-      >
-        <h1 style={{ marginTop: 0 }}>Register</h1>
-        <p style={{ color: "#6b7280", marginBottom: "24px" }}>
-          Napravi korisnički račun za pristup calculatoru.
-        </p>
+    <div className="page-shell">
+  <main className="register-page">
+    <section className="register-shell">
+      <div className="register-layout">
+        <div className="register-panel">
+          <div className="register-panel__intro">
+            <Link to="/" className="register-brand">
+              biznisprocjena.com
+            </Link>
 
-        <label style={{ display: "block", marginBottom: "8px" }}>Ime i prezime</label>
-        <input
-          type="text"
-          value={imePrezime}
-          onChange={(e) => setImePrezime(e.target.value)}
-          required
-          style={{
-            width: "100%",
-            padding: "12px 14px",
-            marginBottom: "16px",
-            borderRadius: "10px",
-            border: "1px solid #d1d5db",
-          }}
-        />
-
-        <label style={{ display: "block", marginBottom: "8px" }}>Email</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={{
-            width: "100%",
-            padding: "12px 14px",
-            marginBottom: "16px",
-            borderRadius: "10px",
-            border: "1px solid #d1d5db",
-          }}
-        />
-
-        <label style={{ display: "block", marginBottom: "8px" }}>Password</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={{
-            width: "100%",
-            padding: "12px 14px",
-            marginBottom: "16px",
-            borderRadius: "10px",
-            border: "1px solid #d1d5db",
-          }}
-        />
-
-        {error && (
-          <div
-            style={{
-              background: "#fee2e2",
-              color: "#991b1b",
-              padding: "12px",
-              borderRadius: "10px",
-              marginBottom: "16px",
-            }}
-          >
-            {error}
+            <h1>Registrujte se i procijenite vrijednost vaše firme besplatno</h1>
+            <p>
+              Kreirajte račun i pristupite jednostavnom alatu za informativnu
+              procjenu vrijednosti biznisa, bez komplikovanog unosa i dugog čekanja.
+            </p>
           </div>
-        )}
 
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            width: "100%",
-            background: "#111827",
-            color: "white",
-            border: "none",
-            borderRadius: "12px",
-            padding: "14px",
-            fontSize: "16px",
-            cursor: "pointer",
-          }}
-        >
-          {loading ? "Kreiranje..." : "Register"}
-        </button>
+          <form className="register-form" onSubmit={handleSubmit}>
+            <label className="register-field">
+              <span>Ime i prezime</span>
+              <input
+                type="text"
+                value={imePrezime}
+                onChange={(e) => setImePrezime(e.target.value)}
+                placeholder="Unesi ime i prezime"
+                required
+              />
+            </label>
 
-        <p style={{ marginTop: "18px", color: "#4b5563" }}>
-          Već imaš račun? <Link to="/login">Login</Link>
-        </p>
+            <label className="register-field">
+              <span>Email adresa</span>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="unesi@email.com"
+                required
+              />
+            </label>
 
-        <p style={{ marginTop: "10px" }}>
-          <Link to="/">Nazad na početnu</Link>
-        </p>
-      </form>
-    </div>
-  );
-}
+            <label className="register-field">
+              <span>Lozinka</span>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Unesi lozinku"
+                required
+              />
+            </label>
+
+            {error && <div className="alert alert-error">{error}</div>}
+
+            <button
+              type="submit"
+              className="btn btn-primary register-submit"
+              disabled={loading}
+            >
+              {loading ? "Kreiram račun..." : "Kreiraj račun"}
+            </button>
+
+            <div className="register-links">
+              <p>
+                Već imaš račun? <Link to="/login">Prijavi se</Link>
+              </p>
+              <p>
+                <Link to="/">Nazad na početnu</Link>
+              </p>
+            </div>
+          </form>
+        </div>
+
+        <aside className="register-preview" aria-label="Pregled aplikacije">
+          <div className="register-preview__badge">Besplatna procjena</div>
+
+          <div className="register-preview__card register-preview__card--hero">
+            <span className="preview-label">Procjena firme</span>
+            <h2>Brz pregled vrijednosti i ključnih pokazatelja</h2>
+            <p>
+              Registracijom dobijate pristup jednostavnom unosu podataka i
+              jasnom informativnom rezultatu procjene.
+            </p>
+          </div>
+
+          <div className="register-preview__grid">
+            <div className="preview-mini preview-mini--value">
+              <span className="preview-mini__label">Procijenjena vrijednost</span>
+              <strong>€ 245.000</strong>
+              <small>Informativni prikaz</small>
+            </div>
+
+            <div className="preview-mini preview-mini--trend">
+              <span className="preview-mini__label">Trend pokazatelja</span>
+              <div className="preview-chart">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <div className="preview-wide">
+              <div className="preview-wide__top">
+                <span>Najčešće korišteno</span>
+                <span>Brzo i pregledno</span>
+              </div>
+              <ul>
+                <li>Jednostavan unos osnovnih podataka</li>
+                <li>Jasan informativni rezultat procjene</li>
+                <li>Pregled prilagođen manjim firmama i poduzetnicima</li>
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  </div>
+); }

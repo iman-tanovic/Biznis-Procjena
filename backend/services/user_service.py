@@ -8,6 +8,19 @@ from repositories.user_repository import UserRepository
 class UserService:
     def __init__(self, repo: UserRepository):
         self.repo = repo
+    
+    def existing_user(self, email : str):
+        return self.repo.get_by_email(email)
+        
+    def verify_user(self, email: str):
+        user = self.repo.get_by_email(email)
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Korisnik nije pronađen."
+            )
+
+        return self.repo.verify_user(user)
 
     def register_user(self, ime_prezime: str, email: str, password: str):
         existing_user = self.repo.get_by_email(email)
