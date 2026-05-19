@@ -12,18 +12,18 @@ class Settings(BaseSettings):
     REDIS_HOST: str | None = None
     REDIS_PORT: int | None = None
 
-    FRONTEND_URL: str = "http://localhost:5173"
+    FRONTEND_URL: str = "http://biznisprocjena.com"
     EMAIL_VERIFICATION_SALT: str = "email-verification-salt"
     EMAIL_VERIFICATION_EXPIRE_SECONDS: int = 60 * 60 * 24
 
     MAIL_USERNAME: str
     MAIL_PASSWORD: str
     MAIL_FROM: str
-    MAIL_PORT: int
-    MAIL_SERVER: str
+    MAIL_PORT: int = 2525
+    MAIL_SERVER: str = "mail.smtp2go.com"
     MAIL_FROM_NAME: str
-    MAIL_STARTTLS: bool = False
-    MAIL_SSL_TLS: bool = True
+    MAIL_STARTTLS: bool = True
+    MAIL_SSL_TLS: bool = False
     USE_CREDENTIALS: bool = True
     VALIDATE_CERTS: bool = True
     DOMAIN: str
@@ -32,6 +32,7 @@ class Settings(BaseSettings):
         default_factory=lambda: [
             "http://localhost:5173",
             "http://127.0.0.1:5173",
+	    "https://biznisprocjena.com"
         ]
     )
 

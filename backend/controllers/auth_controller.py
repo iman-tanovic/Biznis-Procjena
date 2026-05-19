@@ -98,28 +98,28 @@ async def create_user_account(
             detail="Korisnik sa ovim emailom već postoji."
         )
 
-    new_user = user_service.register_user(
-        ime_prezime=user_data.ime_prezime,
-        email=user_data.email,
-        password=user_data.password,
-    )
 
     token = create_url_safe_token({"email": user_data.email})
     link = f"http://{settings.DOMAIN}/verify/{token}"
 
     html_message = f"""
-    <h1>Verify your Email</h1>
-    <p>Please click this <a href="{link}">link</a> to verify your email</p>
-    """
+    <h1>Potvrdite vašu mail adresu</h1>
+    <p>Kliknite ovaj link da potvrdite email adresu <a href="{link}">link</a></p>
+    <p>Ako ovaj pokušaj registracije ne dolazi od vas, ignorirajte poruku.</p>
+"""
 
     message = create_message(
         recipients=[user_data.email],
-        subject="Verify your email",
+        subject="Verifikacija email adrese",
         body=html_message,
     )
 
     await mail.send_message(message)
-
+    new_user = user_service.register_user(
+        ime_prezime=user_data.ime_prezime,
+        email=user_data.email,
+        password=user_data.password,
+    )
     return {
         "message": "Account created! Check email to verify your account.",
         "user": new_user,
