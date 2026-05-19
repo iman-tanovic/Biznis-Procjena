@@ -105,7 +105,7 @@ async def create_user_account(
     )
 
     token = create_url_safe_token({"email": user_data.email})
-    link = f"http://localhost:5173/verify/{token}"
+    link = f"http://{settings.DOMAIN}/verify/{token}"
 
     html_message = f"""
     <h1>Verify your Email</h1>
